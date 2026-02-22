@@ -1,0 +1,39 @@
+# Content Factory — Git Ignore
+# Защита пользовательских данных при обновлениях
+
+# ===========================================
+# ЗОЛОТОЕ ПРАВИЛО:
+# projects/_template/ — СИСТЕМНЫЙ (обновляется)
+# projects/{любой-другой}/ — ПОЛЬЗОВАТЕЛЬСКИЙ (защищён)
+# ===========================================
+
+# Защита пользовательских проектов
+projects/*
+!projects/_template/
+!projects/example-psychologist/
+
+# Личные файлы Макса (ADHD, трекеры, архивы)
+# НЕ должны попадать в конструктор при синхронизации
+max-tracker.md
+web-focus.md
+max-focus-archive/
+session-archive/
+agents/personal/focus-coach.md
+.claude/skills/adhd-productivity/
+
+# Системные файлы
+.DS_Store
+*.swp
+*.swo
+*~
+
+# IDE
+.idea/
+.vscode/
+*.sublime-*
+
+# Временные файлы
+*.tmp
+*.temp
+*.log
+agents/personal/

@@ -1,0 +1,36 @@
+{
+  "notion": {
+    "token": "ntn_YOUR_NOTION_API_KEY",
+    "databaseId": "YOUR_NOTION_DATABASE_ID",
+    "statusProperty": "Status",
+    "approvedValue": "Approved",
+    "publishedValue": "Published",
+    "titleProperties": ["Post", "Name", "Title"]
+  },
+  "morelogin": {
+    "cdpPort": 51830
+  },
+  "schedule": {
+    "times": ["08:23", "10:43", "11:49", "13:07", "15:18", "17:36", "18:49", "20:11", "22:35"],
+    "timezone": "Europe/Moscow",
+    "days": 1,
+    "maxPosts": 10
+  },
+  "delays": {
+    "afterCompose": 4000,
+    "afterType": 500,
+    "afterSchedule": 4000,
+    "betweenPosts": 3000,
+    "pageLoad": 8000,
+    "refreshEveryNPosts": 5
+  },
+  "retries": {
+    "maxRetries": 3,
+    "retryDelayMs": 2000,
+    "postAttempts": 2
+  },
+  "logging": {
+    "directory": "./logs",
+    "accountName": "my-account"
+  }
+}

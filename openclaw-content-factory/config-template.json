@@ -1,0 +1,21 @@
+{
+  "_comment": "Шаблон конфига Content Factory. Используй после openclaw onboard.",
+  "_comment2": "Onboard уже создаёт базовый конфиг — добавь эти настройки поверх.",
+  "agents": {
+    "defaults": {
+      "model": {
+        "primary": "anthropic/claude-opus-4-6"
+      },
+      "heartbeat": {
+        "every": "30m"
+      },
+      "memorySearch": {
+        "enabled": true,
+        "sources": ["memory"]
+      },
+      "compaction": {
+        "mode": "safeguard"
+      }
+    }
+  }
+}

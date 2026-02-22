@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "notion": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/claude-mcp-server-notion"],
+      "env": {
+        "NOTION_API_KEY": "secret_YOUR_NOTION_TOKEN_HERE"
+      }
+    },
+    "perplexity": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/claude-mcp-server-perplexity"],
+      "env": {
+        "PERPLEXITY_API_KEY": "pplx-YOUR_PERPLEXITY_KEY_HERE"
+      }
+    },
+    "laozhang": {
+      "command": "node",
+      "args": ["./mcp-servers/laozhang/dist/index.js"],
+      "env": {
+        "LAOZHANG_API_KEY": "sk-YOUR_LAOZHANG_KEY_HERE"
+      }
+    }
+  }
+}
