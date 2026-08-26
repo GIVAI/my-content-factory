@@ -3,7 +3,9 @@
 
 Что делает с каждым файлом:
   • разворачивает по EXIF (фото с телефона часто лежат «на боку»);
-  • переводит в sRGB, при grayscale=True — в чёрно-белое;
+  • переводит в sRGB, при grayscale=True — в чёрно-белое,
+    при blur>0 — мягко размывает (кадр читается, но не спорит с текстом),
+    при crop=[left, top, right, bottom] в долях — обрезает кадр;
   • ужимает до разумного размера — 300 dpi хватает для печати,
     а PDF не раздувается до сотни мегабайт;
   • складывает результат в build/img/.
@@ -13,17 +15,18 @@ from __future__ import annotations
 import hashlib
 import pathlib
 
-from PIL import Image, ImageOps
+from PIL import Image, ImageFilter, ImageOps
 
 MAX_PX = 2400          # длинная сторона после сжатия
 JPEG_QUALITY = 86
 
 
 def prepare(src: pathlib.Path, out_dir: pathlib.Path,
-            grayscale: bool = False) -> pathlib.Path:
+            grayscale: bool = False, blur: float = 0.0,
+            crop: tuple | list | None = None) -> pathlib.Path:
     out_dir.mkdir(parents=True, exist_ok=True)
     key = hashlib.md5(
-        f"{src.resolve()}:{src.stat().st_mtime_ns}:{MAX_PX}:{grayscale}".encode()
+        f"{src.resolve()}:{src.stat().st_mtime_ns}:{MAX_PX}:{grayscale}:{blur}:{crop}".encode()
     ).hexdigest()[:10]
 
     im = Image.open(src)
@@ -34,6 +37,14 @@ def prepare(src: pathlib.Path, out_dir: pathlib.Path,
         scale = MAX_PX / max(im.size)
         im = im.resize((round(im.width * scale), round(im.height * scale)),
                        Image.LANCZOS)
+
+    if crop:
+        left, top, right, bottom = (float(v) for v in crop)
+        im = im.crop((round(left * im.width), round(top * im.height),
+                      round(right * im.width), round(bottom * im.height)))
+
+    if blur:
+        im = im.filter(ImageFilter.GaussianBlur(radius=float(blur)))
 
     if grayscale:
         im = im.convert("L").convert("RGB")

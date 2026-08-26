@@ -21,14 +21,16 @@ FIELD_HOST = "https://field.local"
 PHOTO_OUT = ROOT / "build" / "img"
 
 
-def photo_url(src: str, grayscale: bool = False) -> str:
+def photo_url(src: str, grayscale: bool = False, blur: float = 0.0,
+              crop=None) -> str:
     """Путь к фотографии → готовый к вёрстке file://-адрес."""
     path = pathlib.Path(src)
     if not path.is_absolute():
         path = ROOT / path
     if not path.exists():
         raise FileNotFoundError(f"Не найдена фотография: {src}")
-    return images.prepare(path, PHOTO_OUT, grayscale=grayscale).as_uri()
+    return images.prepare(path, PHOTO_OUT, grayscale=grayscale, blur=blur,
+                          crop=crop).as_uri()
 
 
 def photo_bg(photo) -> str:
@@ -44,11 +46,13 @@ def photo_bg(photo) -> str:
     mid = tint
     bottom = min(tint + 0.10, 0.97)
     gray = photo.get("grayscale", True)
+    blur = float(photo.get("blur", 0))
+    crop = photo.get("crop")
     return (
         ' style="background-image:'
         f"linear-gradient(to bottom, rgba(90,14,30,{top:.2f}) 0%,"
         f"rgba(76,10,26,{mid:.2f}) 58%, rgba(59,7,19,{bottom:.2f}) 100%),"
-        f"url({photo_url(photo['src'], grayscale=gray)});"
+        f"url({photo_url(photo['src'], grayscale=gray, blur=blur, crop=crop)});"
         f'background-size:cover;background-position:{pos}"'
     )
 
@@ -170,7 +174,7 @@ def render_block(b: dict, fn: FieldNamer) -> str:
         pos = b.get("position", "center 30%")
         return (
             f'<figure class="photo" style="{style};border-radius:{radius}mm">'
-            f'<img src="{photo_url(b["src"], grayscale=b.get("grayscale", False))}" alt="" '
+            f'<img src="{photo_url(b["src"], grayscale=b.get("grayscale", False), blur=b.get("blur", 0), crop=b.get("crop"))}" alt="" '
             f'style="object-fit:{fit};object-position:{pos}">'
             f"{caption}</figure>"
         )
