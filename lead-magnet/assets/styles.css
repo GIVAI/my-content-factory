@@ -1,0 +1,330 @@
+/* =========================================================================
+   Рабочая тетрадь — печатные стили A4
+   Палитра: maroon + cream (по референсу)
+   ========================================================================= */
+
+:root{
+  /* — цвет — */
+  --maroon-900:#3B0713;
+  --maroon-800:#4C0A1A;
+  --maroon:#5A0E1E;
+  --maroon-600:#7C1E30;
+  --maroon-300:#B57683;
+  --cream:#F8F1E6;
+  --cream-card:#FCF8F1;
+  --ink:#2E2124;
+  --muted:#8C7B74;
+  --rule:rgba(90,14,30,.16);
+  --rule-strong:rgba(90,14,30,.30);
+
+  /* — сетка — */
+  --pw:210mm;
+  --ph:297mm;
+  --mx:18mm;          /* поля слева/справа */
+  --mt:16mm;          /* верхнее поле */
+  --mb:14mm;          /* нижнее поле */
+}
+
+*{box-sizing:border-box}
+
+@page{ size:A4; margin:0 }
+
+html,body{margin:0;padding:0}
+
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  color:var(--ink);
+  background:#8d8d8d;              /* виден только в браузере, между страницами */
+  -webkit-print-color-adjust:exact;
+  print-color-adjust:exact;
+  font-feature-settings:'liga' 1,'kern' 1,'onum' 0;
+}
+
+/* ---------- страница ---------- */
+.page{
+  position:relative;
+  width:var(--pw);
+  height:var(--ph);
+  overflow:hidden;
+  background:var(--cream);
+  page-break-after:always;
+  break-after:page;
+  display:flex;
+  flex-direction:column;
+  padding:var(--mt) var(--mx) var(--mb);
+}
+.page:last-child{page-break-after:auto;break-after:auto}
+
+@media screen{
+  .page{margin:0 auto 10mm;box-shadow:0 6px 30px rgba(0,0,0,.35)}
+}
+
+.page__head{
+  display:flex;align-items:baseline;justify-content:space-between;
+  padding-bottom:3.2mm;border-bottom:.35pt solid var(--rule);
+  margin-bottom:8mm;flex:none;
+}
+.page__body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.page__foot{
+  flex:none;display:flex;align-items:baseline;justify-content:space-between;
+  padding-top:3mm;margin-top:6mm;border-top:.35pt solid var(--rule);
+}
+
+.kicker{
+  font-size:6.6pt;font-weight:600;letter-spacing:.20em;text-transform:uppercase;
+  color:var(--maroon-600);
+}
+.brand{font-size:6.6pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.folio{
+  font-family:'Playfair Display',serif;font-size:11pt;color:var(--maroon);
+  font-variant-numeric:lining-nums;
+}
+
+/* ---------- обложка ---------- */
+.page--cover{padding:0;background:var(--maroon);display:block}
+.cover__top{
+  position:relative;height:60%;
+  background:
+    linear-gradient(168deg, #6B1425 0%, var(--maroon) 46%, var(--maroon-900) 100%);
+  padding:var(--mt) var(--mx);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.cover__head{display:flex;align-items:baseline;justify-content:space-between}
+.cover__note{font-size:7pt;letter-spacing:.18em;text-transform:uppercase;color:rgba(248,241,230,.5)}
+.cover__eyebrow{
+  font-size:7.4pt;font-weight:600;letter-spacing:.30em;text-transform:uppercase;
+  color:rgba(248,241,230,.72);
+}
+.cover__rule{width:22mm;height:.8pt;background:rgba(248,241,230,.55);margin:6mm 0 0}
+.cover__title{
+  font-family:'Playfair Display',serif;font-weight:600;
+  font-size:52pt;line-height:1.02;letter-spacing:-.015em;
+  color:var(--cream);margin:0 0 4mm;max-width:150mm;
+}
+.cover__title em{font-style:italic;font-weight:500;color:#EBC9C0}
+.cover__sub{
+  font-size:11pt;font-weight:300;line-height:1.55;color:rgba(248,241,230,.78);
+  margin:0;max-width:120mm;
+}
+.cover__bottom{
+  height:40%;background:var(--cream);
+  padding:14mm var(--mx) var(--mb);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+.cover__for{font-size:9.5pt;line-height:1.6;color:var(--ink);max-width:135mm}
+.cover__for b{color:var(--maroon);font-weight:600}
+.cover__sign{display:flex;align-items:flex-end;justify-content:space-between;gap:8mm}
+.cover__author{
+  font-family:'Playfair Display',serif;font-size:15pt;color:var(--maroon);margin:0;
+}
+.cover__role{font-size:8pt;color:var(--muted);margin:1.5mm 0 0;letter-spacing:.04em}
+.cover__seal{
+  width:22mm;height:22mm;border-radius:50%;border:.8pt solid var(--maroon-300);
+  display:flex;align-items:center;justify-content:center;text-align:center;
+  font-size:5.8pt;letter-spacing:.16em;text-transform:uppercase;color:var(--maroon-600);
+  line-height:1.35;padding:2mm;flex:none;
+}
+
+/* ---------- разделитель ---------- */
+.page--divider{
+  background:
+    linear-gradient(160deg, #6B1425 0%, var(--maroon) 52%, var(--maroon-900) 100%);
+  justify-content:center;
+}
+.divider__num{
+  font-family:'Playfair Display',serif;font-size:96pt;line-height:.9;font-weight:600;
+  color:transparent;-webkit-text-stroke:.8pt rgba(248,241,230,.55);
+  margin:0 0 4mm;
+}
+.divider__title{
+  font-family:'Playfair Display',serif;font-weight:600;font-size:30pt;line-height:1.15;
+  color:var(--cream);margin:0 0 6mm;max-width:150mm;
+}
+.divider__caption{
+  font-size:10.5pt;font-weight:300;line-height:1.6;color:rgba(248,241,230,.75);
+  max-width:125mm;margin:0;
+}
+.divider__foot{
+  position:absolute;left:var(--mx);right:var(--mx);bottom:var(--mb);
+  display:flex;justify-content:space-between;align-items:baseline;
+  border-top:.35pt solid rgba(248,241,230,.28);padding-top:3mm;
+}
+.divider__foot .brand{color:rgba(248,241,230,.6)}
+.divider__foot .folio{color:rgba(248,241,230,.85)}
+
+/* ---------- типографика контента ---------- */
+h2.title{
+  font-family:'Playfair Display',serif;font-weight:600;font-size:23pt;line-height:1.18;
+  color:var(--maroon);margin:0 0 6.5mm;letter-spacing:-.005em;flex:none;
+}
+h3.subtitle{flex:none;
+  font-family:'Playfair Display',serif;font-weight:600;font-size:14pt;
+  color:var(--maroon-800);margin:8mm 0 3mm;
+}
+p{font-size:9.8pt;line-height:1.62;margin:0 0 3.4mm;color:var(--ink);flex:none}
+p.lead{font-size:11pt;line-height:1.55;font-weight:300;color:var(--maroon-800);margin-bottom:5mm}
+p.note{font-size:8.6pt;color:var(--muted);line-height:1.5}
+strong{font-weight:600;color:var(--maroon-800)}
+em{font-style:italic}
+.hl{background:rgba(90,14,30,.09);padding:0 .8mm;border-radius:1px;color:var(--maroon-800)}
+
+ul.list,ol.list{margin:0 0 4mm;padding:0;list-style:none;flex:none}
+ul.list li,ol.list li{
+  position:relative;padding-left:7mm;font-size:9.8pt;line-height:1.55;margin-bottom:2.4mm;
+}
+ul.list li::before{
+  content:'';position:absolute;left:1.4mm;top:2.1mm;
+  width:1.6mm;height:1.6mm;border-radius:50%;background:var(--maroon-300);
+}
+ol.list{counter-reset:li}
+ol.list li{counter-increment:li;padding-left:9mm}
+ol.list li::before{
+  content:counter(li,decimal-leading-zero);position:absolute;left:0;top:.2mm;
+  font-family:'Playfair Display',serif;font-size:9pt;color:var(--maroon-600);
+}
+
+/* ---------- акцентные блоки ---------- */
+.callout{
+  position:relative;background:rgba(90,14,30,.055);
+  padding:4.5mm 5mm 4.5mm 6.5mm;margin:0 0 5mm;border-radius:0 1.5mm 1.5mm 0;
+  flex:none;
+}
+.callout::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:1.6pt;background:var(--maroon);
+}
+.callout__title{
+  font-size:7pt;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--maroon);margin:0 0 2mm;
+}
+.callout p{margin:0;font-size:9.4pt;line-height:1.55}
+
+.quote{margin:3mm 0 6mm;padding-left:7mm;position:relative;flex:none}
+.quote::before{
+  content:'';position:absolute;left:0;top:1mm;bottom:1mm;width:.8pt;
+  background:var(--maroon-300);
+}
+.quote p{
+  font-family:'Playfair Display',serif;font-style:italic;font-size:13.5pt;line-height:1.42;
+  color:var(--maroon-800);margin:0;
+}
+.quote cite{
+  display:block;margin-top:2.5mm;font-style:normal;font-size:7.6pt;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--muted);
+}
+
+.panel{flex:none;
+  background:var(--cream-card);border:.4pt solid var(--rule);
+  border-radius:2mm;padding:5mm 5.5mm;margin:0 0 5mm;
+}
+
+/* ---------- поля для заполнения ---------- */
+.field{margin:0 0 5.5mm;position:relative;flex:none}
+.field--grow{flex:1 1 auto;display:flex;flex-direction:column;min-height:0}
+.field--grow .boxfield{flex:1 1 auto}
+.field__label{
+  display:flex;align-items:baseline;gap:2.5mm;
+  font-size:7.2pt;font-weight:600;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--maroon);margin:0 0 1mm;
+}
+.field__label .q{
+  font-family:'Playfair Display',serif;font-size:9pt;letter-spacing:0;
+  color:var(--maroon-300);text-transform:none;
+}
+.field__ask{
+  font-size:9.8pt;line-height:1.5;color:var(--ink);margin:0 0 2.6mm;font-weight:400;
+}
+.field__hint{font-size:8.2pt;font-style:italic;color:var(--muted);margin:0 0 2.4mm;line-height:1.45}
+
+.lines{position:relative}
+.lines .line{
+  position:relative;height:8.6mm;border-bottom:.4pt solid var(--rule-strong);
+}
+.lines .line:first-child{border-top:none}
+
+.boxfield{
+  position:relative;border:.4pt solid var(--rule-strong);border-radius:2mm;
+  background:rgba(255,255,255,.55);
+}
+.boxfield--ruled{
+  background-image:repeating-linear-gradient(
+      to bottom, transparent 0, transparent 8.5mm,
+      var(--rule) 8.5mm, var(--rule) calc(8.5mm + .4pt));
+  background-position:0 3.2mm;
+  background-clip:content-box;
+  padding:0 2.5mm;
+}
+
+.checklist{margin:0 0 5mm;padding:0;list-style:none}
+.checklist li{
+  position:relative;display:flex;align-items:flex-start;gap:3.2mm;
+  padding:2.2mm 0;border-bottom:.35pt dotted var(--rule-strong);
+  font-size:9.6pt;line-height:1.45;
+}
+.checklist li:last-child{border-bottom:none}
+.checkbox{
+  flex:none;width:4.2mm;height:4.2mm;border:.5pt solid var(--maroon-600);
+  border-radius:.8mm;background:rgba(255,255,255,.6);margin-top:.4mm;position:relative;
+}
+
+/* таблица-сетка */
+.grid{width:100%;border-collapse:collapse;margin:0 0 5mm;table-layout:fixed}
+.grid th{
+  font-size:6.8pt;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cream);background:var(--maroon);padding:2.4mm 3mm;text-align:left;
+  border-right:.4pt solid rgba(248,241,230,.25);
+}
+.grid th:last-child{border-right:none}
+.grid td{
+  border:.4pt solid var(--rule-strong);height:11mm;padding:0;position:relative;
+  background:rgba(255,255,255,.45);
+}
+.grid tr:nth-child(even) td{background:rgba(90,14,30,.035)}
+
+/* шкала 1–10 */
+.scale{margin:0 0 5mm}
+.scale__row{display:flex;gap:2.2mm;margin:3.5mm 0 1.8mm}
+.scale__dot{
+  flex:1 1 0;aspect-ratio:1/1;border:.5pt solid var(--maroon-300);border-radius:50%;
+  display:flex;align-items:center;justify-content:center;
+  font-size:7.6pt;color:var(--maroon-600);position:relative;
+}
+.scale__ends{display:flex;justify-content:space-between;font-size:7.4pt;color:var(--muted)}
+
+/* две колонки */
+.cols{display:flex;gap:6mm}
+.cols>*{flex:1 1 0;min-width:0}
+
+/* «до / после» */
+.duo{display:flex;gap:5mm;margin:2.5mm 0 5mm}
+.duo__side{flex:1 1 0;min-width:0}
+.duo__cap{
+  font-size:7pt;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+  color:var(--maroon);margin:0 0 1.8mm;
+}
+
+/* ---------- финальная страница ---------- */
+.page--outro{
+  background:
+    linear-gradient(200deg, #6B1425 0%, var(--maroon) 48%, var(--maroon-900) 100%);
+  justify-content:center;align-items:flex-start;color:var(--cream);
+}
+.page--outro h2{
+  font-family:'Playfair Display',serif;font-weight:600;font-size:28pt;line-height:1.15;
+  color:var(--cream);margin:0 0 5mm;max-width:150mm;
+}
+.page--outro p{color:rgba(248,241,230,.8);font-size:10.5pt;font-weight:300;max-width:130mm}
+.cta{
+  align-self:flex-start;display:inline-block;margin-top:6mm;padding:4mm 8mm;border:.6pt solid rgba(248,241,230,.6);
+  border-radius:20mm;color:var(--cream);text-decoration:none;
+  font-size:8.6pt;letter-spacing:.18em;text-transform:uppercase;
+}
+.outro__contacts{margin-top:10mm;font-size:9pt;color:rgba(248,241,230,.8);line-height:1.9}
+.outro__contacts a{color:var(--cream);text-decoration:none;border-bottom:.4pt solid rgba(248,241,230,.4)}
+
+/* ---------- служебное ---------- */
+.spacer{display:block}
+a.pdf-field{
+  position:absolute;display:block;text-decoration:none;color:transparent;
+  z-index:5;
+}
+.fieldwrap{position:relative}
