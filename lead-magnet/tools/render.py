@@ -124,6 +124,20 @@ def render_block(b: dict, fn: FieldNamer) -> str:
     if t == "duo":
         return render_duo(b, fn)
 
+    if t == "card":
+        nums = f'<div class="card__num">{esc(b["number"])}</div>' if b.get("number") else ""
+        body = "".join(f"<p>{esc(x)}</p>" for x in as_list(b.get("text", [])))
+        return (
+            f'<div class="card">{nums}<div class="card__body">'
+            f'<div class="card__title">{esc(b["title"])}</div>{body}</div></div>'
+        )
+
+    if t == "options":
+        return render_options(b, fn)
+
+    if t == "numbered_lines":
+        return render_numbered_lines(b, fn)
+
     if t == "cols":
         cols = "".join(
             f'<div>{"".join(render_block(x, fn) for x in col)}</div>'
@@ -234,6 +248,41 @@ def render_scale(b: dict, fn: FieldNamer) -> str:
     )
 
 
+def render_options(b: dict, fn: FieldNamer) -> str:
+    """Вопрос + варианты ответа с галочками (Да / Иногда / Нет)."""
+    rows = ""
+    for i, item in enumerate(b["items"]):
+        opts = ""
+        for j, choice in enumerate(item.get("choices", ["Да", "Нет"])):
+            name = fn.make(f"opt_{slug(b.get('label', 'v'), 'v')}_{i + 1}_{j + 1}")
+            opts += (
+                '<span class="opt"><span class="checkbox">'
+                + anchor(name, "check", "inset:0")
+                + f"</span>{esc(choice)}</span>"
+            )
+        rows += (
+            f'<li><p class="options__q">{esc(item["text"])}</p>'
+            f'<div class="options__row">{opts}</div></li>'
+        )
+    return f'<div class="field">{field_head(b)}<ul class="options">{rows}</ul></div>'
+
+
+def render_numbered_lines(b: dict, fn: FieldNamer) -> str:
+    """Пронумерованные строчки для списка ответов (1…5)."""
+    n = int(b.get("count", 5))
+    base = slug(b.get("label") or b.get("ask") or "spisok", "spisok")
+    rows = ""
+    for i in range(n):
+        name = fn.make(f"{base}_{i + 1}")
+        rows += (
+            f'<div class="nline"><span class="nline__num">{i + 1}</span>'
+            '<span class="nline__rule">'
+            + anchor(name, "line", "left:1mm;right:1mm;top:1mm;bottom:.6mm")
+            + "</span></div>"
+        )
+    return f'<div class="field">{field_head(b)}<div class="nlines">{rows}</div></div>'
+
+
 def render_duo(b: dict, fn: FieldNamer) -> str:
     sides = ""
     for side in b["sides"]:
@@ -260,6 +309,7 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
 
     if t == "cover":
         title = esc(p.get("title", meta.get("title", "")))
+        title_style = f' style="font-size:{p["title_size"]}"' if p.get("title_size") else ""
         seal = p.get("seal", "Рабочая\nтетрадь").replace("\n", "<br>")
         return f"""
 <section class="page page--cover">
@@ -272,7 +322,7 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
       <div class="cover__rule"></div>
     </div>
     <div>
-      <h1 class="cover__title">{title}</h1>
+      <h1 class="cover__title"{title_style}>{title}</h1>
       <p class="cover__sub">{esc(p.get('subtitle', ''))}</p>
     </div>
   </div>
@@ -309,10 +359,12 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
             if p.get("cta")
             else ""
         )
+        offer = f'<div class="offer">{esc(p["offer"])}</div>' if p.get("offer") else ""
         return f"""
 <section class="page page--outro">
   <h2>{esc(p.get('title', ''))}</h2>
   <p>{esc(p.get('text', ''))}</p>
+  {offer}
   {cta}
   <div class="outro__contacts">{contacts}</div>
   <div class="divider__foot">
@@ -324,13 +376,14 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
     # обычная страница
     body = "".join(render_block(b, fn) for b in p.get("blocks", []))
     title = f'<h2 class="title">{esc(p["title"])}</h2>' if p.get("title") else ""
+    body_cls = "page__body page__body--fill" if p.get("fill") else "page__body"
     return f"""
 <section class="page page--content">
   <header class="page__head">
     <span class="kicker">{esc(p.get('kicker', meta.get('brand', '')))}</span>
     <span class="kicker">{esc(p.get('kicker_right', ''))}</span>
   </header>
-  <div class="page__body">{title}{body}</div>
+  <div class="{body_cls}">{title}{body}</div>
   <footer class="page__foot">
     <span class="brand">{esc(meta.get('brand', ''))}</span>
     <span class="folio">{folio:02d}</span>

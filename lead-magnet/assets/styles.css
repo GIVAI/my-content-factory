@@ -65,6 +65,7 @@ body{
   margin-bottom:8mm;flex:none;
 }
 .page__body{flex:1 1 auto;min-height:0;display:flex;flex-direction:column}
+.page__body--fill{justify-content:space-between}
 .page__foot{
   flex:none;display:flex;align-items:baseline;justify-content:space-between;
   padding-top:3mm;margin-top:6mm;border-top:.35pt solid var(--rule);
@@ -328,3 +329,48 @@ a.pdf-field{
   z-index:5;
 }
 .fieldwrap{position:relative}
+
+/* варианты ответа «Да / Иногда / Нет» */
+.options{margin:0 0 5mm;padding:0;list-style:none;flex:none}
+.options li{padding:2.6mm 0;border-bottom:.35pt dotted var(--rule-strong)}
+.options li:last-child{border-bottom:none}
+.options__q{font-size:9.6pt;line-height:1.45;margin:0 0 2.2mm;color:var(--ink)}
+.options__row{display:flex;gap:9mm;flex-wrap:wrap}
+.opt{display:flex;align-items:center;gap:2.2mm;font-size:9pt;color:var(--maroon-800)}
+.opt .checkbox{margin-top:0}
+
+/* пронумерованные строчки */
+.nlines{display:block}
+.nline{display:flex;align-items:flex-end;gap:3mm;height:9.6mm}
+.nline__num{
+  font-family:'Playfair Display',serif;font-size:10pt;color:var(--maroon-300);
+  width:4mm;text-align:right;padding-bottom:1.6mm;flex:none;
+}
+.nline__rule{
+  flex:1 1 auto;position:relative;height:8.6mm;border-bottom:.4pt solid var(--rule-strong);
+}
+
+/* карточка с номером — сценарии, правила, стратегии */
+.card{display:flex;gap:5.5mm;padding:5.6mm 0;border-top:.35pt solid var(--rule);flex:none}
+.card + .card{margin-top:0}
+.card:first-of-type{border-top:none;padding-top:1.5mm}
+.card__num{
+  font-family:'Playfair Display',serif;font-size:22pt;line-height:1;
+  color:transparent;-webkit-text-stroke:.5pt var(--maroon-300);
+  width:12.5mm;flex:none;padding-top:.2mm;
+}
+.card__body{flex:1 1 auto;min-width:0}
+.card__title{
+  font-family:'Playfair Display',serif;font-size:13pt;line-height:1.25;
+  color:var(--maroon);margin:0 0 2.4mm;
+}
+.card__body p{font-size:9.8pt;line-height:1.6;margin:0 0 2.6mm}
+.card__body p:last-child{margin-bottom:0}
+
+/* оффер на финальной странице */
+.offer{
+  align-self:flex-start;margin:2mm 0 0;padding:3.5mm 6mm;
+  background:rgba(248,241,230,.10);border:.5pt solid rgba(248,241,230,.35);
+  border-radius:1.5mm;color:var(--cream);font-size:10pt;line-height:1.5;
+}
+.offer b{font-weight:600}
