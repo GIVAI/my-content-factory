@@ -12,10 +12,39 @@ import pathlib
 import re
 from typing import Any
 
+import images
+
 ROOT = pathlib.Path(__file__).resolve().parent.parent
 ASSETS = ROOT / "assets"
 
 FIELD_HOST = "https://field.local"
+PHOTO_OUT = ROOT / "build" / "img"
+
+
+def photo_url(src: str) -> str:
+    """Путь к фотографии → готовый к вёрстке file://-адрес."""
+    path = pathlib.Path(src)
+    if not path.is_absolute():
+        path = ROOT / path
+    if not path.exists():
+        raise FileNotFoundError(f"Не найдена фотография: {src}")
+    return images.prepare(path, PHOTO_OUT).as_uri()
+
+
+def photo_bg(photo) -> str:
+    """Инлайн-стиль: фотография как фон с бордовой заливкой поверх."""
+    if not photo:
+        return ""
+    if isinstance(photo, str):
+        photo = {"src": photo}
+    tint = float(photo.get("tint", 0.82))
+    pos = photo.get("position", "center 30%")
+    return (
+        ' style="background-image:'
+        f"linear-gradient(168deg, rgba(90,14,30,{tint}) 0%, rgba(59,7,19,{min(tint + .08, 1):.2f}) 100%),"
+        f"url({photo_url(photo['src'])});"
+        f'background-size:cover;background-position:{pos}"'
+    )
 
 
 # --------------------------------------------------------------------------- утилиты
@@ -123,6 +152,22 @@ def render_block(b: dict, fn: FieldNamer) -> str:
 
     if t == "duo":
         return render_duo(b, fn)
+
+    if t == "image":
+        style = f'height:{b["height"]}mm' if b.get("height") else ""
+        radius = b.get("radius", 2)
+        caption = (
+            f'<figcaption class="photo__caption">{esc(b["caption"])}</figcaption>'
+            if b.get("caption") else ""
+        )
+        fit = b.get("fit", "cover")
+        pos = b.get("position", "center 30%")
+        return (
+            f'<figure class="photo" style="{style};border-radius:{radius}mm">'
+            f'<img src="{photo_url(b["src"])}" alt="" '
+            f'style="object-fit:{fit};object-position:{pos}">'
+            f"{caption}</figure>"
+        )
 
     if t == "card":
         nums = f'<div class="card__num">{esc(b["number"])}</div>' if b.get("number") else ""
@@ -336,10 +381,11 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
     if t == "cover":
         title = esc(p.get("title", meta.get("title", "")))
         title_style = f' style="font-size:{p["title_size"]}"' if p.get("title_size") else ""
+        cover_bg = photo_bg(p.get("photo"))
         seal = p.get("seal", "Рабочая\nтетрадь").replace("\n", "<br>")
         return f"""
 <section class="page page--cover">
-  <div class="cover__top">
+  <div class="cover__top"{cover_bg}>
     <div>
       <div class="cover__head">
         <div class="cover__eyebrow">{esc(p.get('eyebrow', 'Рабочая тетрадь'))}</div>
@@ -365,8 +411,9 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
 </section>"""
 
     if t == "divider":
+        divider_bg = photo_bg(p.get("photo"))
         return f"""
-<section class="page page--divider">
+<section class="page page--divider"{divider_bg}>
   <div class="divider__num">{esc(p.get('number', ''))}</div>
   <h2 class="divider__title">{esc(p.get('title', ''))}</h2>
   <p class="divider__caption">{esc(p.get('caption', ''))}</p>
@@ -380,6 +427,7 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
         contacts = "".join(
             f"<div>{esc(c)}</div>" for c in p.get("contacts", [])
         )
+        outro_bg = photo_bg(p.get("photo"))
         cta = (
             f'<a class="cta" href="{html.escape(p["cta_url"])}">{esc(p["cta"])}</a>'
             if p.get("cta")
@@ -387,7 +435,7 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
         )
         offer = render_offer(p.get("offer"))
         return f"""
-<section class="page page--outro">
+<section class="page page--outro"{outro_bg}>
   <h2>{esc(p.get('title', ''))}</h2>
   <p>{esc(p.get('text', ''))}</p>
   {offer}
