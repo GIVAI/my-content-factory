@@ -84,7 +84,7 @@ body{
 /* ---------- обложка ---------- */
 .page--cover{padding:0;background:var(--maroon);display:block}
 .cover__top{
-  position:relative;height:60%;
+  position:relative;height:66%;
   background:
     linear-gradient(168deg, #6B1425 0%, var(--maroon) 46%, var(--maroon-900) 100%);
   padding:var(--mt) var(--mx);
@@ -108,7 +108,7 @@ body{
   margin:0;max-width:120mm;
 }
 .cover__bottom{
-  height:40%;background:var(--cream);
+  height:34%;background:var(--cream);
   padding:14mm var(--mx) var(--mb);
   display:flex;flex-direction:column;justify-content:space-between;
 }

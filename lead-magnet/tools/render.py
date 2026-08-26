@@ -21,14 +21,14 @@ FIELD_HOST = "https://field.local"
 PHOTO_OUT = ROOT / "build" / "img"
 
 
-def photo_url(src: str) -> str:
+def photo_url(src: str, grayscale: bool = False) -> str:
     """Путь к фотографии → готовый к вёрстке file://-адрес."""
     path = pathlib.Path(src)
     if not path.is_absolute():
         path = ROOT / path
     if not path.exists():
         raise FileNotFoundError(f"Не найдена фотография: {src}")
-    return images.prepare(path, PHOTO_OUT).as_uri()
+    return images.prepare(path, PHOTO_OUT, grayscale=grayscale).as_uri()
 
 
 def photo_bg(photo) -> str:
@@ -37,12 +37,18 @@ def photo_bg(photo) -> str:
         return ""
     if isinstance(photo, str):
         photo = {"src": photo}
-    tint = float(photo.get("tint", 0.82))
+    tint = float(photo.get("tint", 0.86))
     pos = photo.get("position", "center 30%")
+    # фон делаем плотнее книзу: сверху виден кадр, внизу читается заголовок
+    top = max(tint - 0.12, 0)
+    mid = tint
+    bottom = min(tint + 0.10, 0.97)
+    gray = photo.get("grayscale", True)
     return (
         ' style="background-image:'
-        f"linear-gradient(168deg, rgba(90,14,30,{tint}) 0%, rgba(59,7,19,{min(tint + .08, 1):.2f}) 100%),"
-        f"url({photo_url(photo['src'])});"
+        f"linear-gradient(to bottom, rgba(90,14,30,{top:.2f}) 0%,"
+        f"rgba(76,10,26,{mid:.2f}) 58%, rgba(59,7,19,{bottom:.2f}) 100%),"
+        f"url({photo_url(photo['src'], grayscale=gray)});"
         f'background-size:cover;background-position:{pos}"'
     )
 
@@ -164,7 +170,7 @@ def render_block(b: dict, fn: FieldNamer) -> str:
         pos = b.get("position", "center 30%")
         return (
             f'<figure class="photo" style="{style};border-radius:{radius}mm">'
-            f'<img src="{photo_url(b["src"])}" alt="" '
+            f'<img src="{photo_url(b["src"], grayscale=b.get("grayscale", False))}" alt="" '
             f'style="object-fit:{fit};object-position:{pos}">'
             f"{caption}</figure>"
         )
@@ -184,9 +190,11 @@ def render_block(b: dict, fn: FieldNamer) -> str:
         return render_numbered_lines(b, fn)
 
     if t == "cols":
+        ratio = b.get("ratio") or [1] * len(b["columns"])
         cols = "".join(
-            f'<div>{"".join(render_block(x, fn) for x in col)}</div>'
-            for col in b["columns"]
+            f'<div style="flex:{ratio[i]} 1 0">'
+            f'{"".join(render_block(x, fn) for x in col)}</div>'
+            for i, col in enumerate(b["columns"])
         )
         return f'<div class="cols">{cols}</div>'
 
