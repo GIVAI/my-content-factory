@@ -315,9 +315,10 @@ ol.list li::before{
 }
 .page--outro p{color:rgba(248,241,230,.8);font-size:10.5pt;font-weight:300;max-width:130mm}
 .cta{
-  align-self:flex-start;display:inline-block;margin-top:6mm;padding:4mm 8mm;border:.6pt solid rgba(248,241,230,.6);
-  border-radius:20mm;color:var(--cream);text-decoration:none;
-  font-size:8.6pt;letter-spacing:.18em;text-transform:uppercase;
+  align-self:flex-start;display:inline-block;margin-top:7mm;padding:4.6mm 11mm;
+  background:var(--cream);border:none;border-radius:20mm;
+  color:var(--maroon);text-decoration:none;
+  font-size:9pt;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
 }
 .outro__contacts{margin-top:10mm;font-size:9pt;color:rgba(248,241,230,.8);line-height:1.9}
 .outro__contacts a{color:var(--cream);text-decoration:none;border-bottom:.4pt solid rgba(248,241,230,.4)}
@@ -369,8 +370,31 @@ a.pdf-field{
 
 /* оффер на финальной странице */
 .offer{
-  align-self:flex-start;margin:2mm 0 0;padding:3.5mm 6mm;
-  background:rgba(248,241,230,.10);border:.5pt solid rgba(248,241,230,.35);
-  border-radius:1.5mm;color:var(--cream);font-size:10pt;line-height:1.5;
+  align-self:flex-start;margin:3mm 0 1mm;padding:5mm 8mm 5.5mm;
+  background:rgba(248,241,230,.09);border:.6pt solid rgba(248,241,230,.32);
+  border-radius:2mm;color:var(--cream);
 }
-.offer b{font-weight:600}
+.offer__note{
+  font-size:7pt;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+  color:#EFC9C0;margin:0 0 3mm;
+}
+.offer__row{display:flex;align-items:baseline;gap:6mm}
+.offer__price{
+  font-family:'Playfair Display',serif;font-size:34pt;line-height:1;
+  color:var(--cream);letter-spacing:-.01em;
+  font-variant-numeric:lining-nums;font-feature-settings:'lnum' 1;
+}
+.offer__old{
+  position:relative;font-size:13pt;font-weight:300;
+  color:rgba(248,241,230,.45);white-space:nowrap;
+}
+.offer__old::after{
+  content:'';position:absolute;left:-1mm;right:-1mm;top:52%;
+  height:.9pt;background:rgba(248,241,230,.6);
+}
+.offer__caption{
+  font-size:9pt;line-height:1.5;color:rgba(248,241,230,.75);margin:3mm 0 0;
+}
+
+/* на тёмных страницах жирный текст остаётся светлым */
+.page--outro strong,.page--divider strong{color:var(--cream)}

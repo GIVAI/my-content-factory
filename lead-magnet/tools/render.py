@@ -304,6 +304,32 @@ def render_duo(b: dict, fn: FieldNamer) -> str:
 
 
 # --------------------------------------------------------------------------- страницы
+def render_offer(offer) -> str:
+    """Блок с ценой на финальной странице.
+
+    offer: строка (простой текст) либо словарь
+    {note, price, old_price, caption}.
+    """
+    if not offer:
+        return ""
+    if isinstance(offer, str):
+        return f'<div class="offer"><div class="offer__caption">{esc(offer)}</div></div>'
+
+    parts = ""
+    if offer.get("note"):
+        parts += f'<div class="offer__note">{esc(offer["note"])}</div>'
+    row = ""
+    if offer.get("price"):
+        row += f'<span class="offer__price">{esc(offer["price"])}</span>'
+    if offer.get("old_price"):
+        row += f'<span class="offer__old">{esc(offer["old_price"])}</span>'
+    if row:
+        parts += f'<div class="offer__row">{row}</div>'
+    if offer.get("caption"):
+        parts += f'<div class="offer__caption">{esc(offer["caption"])}</div>'
+    return f'<div class="offer">{parts}</div>'
+
+
 def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
     t = p.get("type", "content")
 
@@ -359,7 +385,7 @@ def render_page(p: dict, meta: dict, folio: int, fn: FieldNamer) -> str:
             if p.get("cta")
             else ""
         )
-        offer = f'<div class="offer">{esc(p["offer"])}</div>' if p.get("offer") else ""
+        offer = render_offer(p.get("offer"))
         return f"""
 <section class="page page--outro">
   <h2>{esc(p.get('title', ''))}</h2>
