@@ -1,0 +1,110 @@
+<style>.kdz{--ink:#131A1C;--ink2:#55666A;--ink3:#839598;--rule:#D9DED8;--rule2:#E7EBE6;
+--card:#fff;--raise:#F6F8F5;--petrol:#12414F;--amber:#9C6410;
+color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
+font-size:17px;line-height:1.62;max-width:780px;margin:0 auto;padding:8px 0 32px;-webkit-text-size-adjust:100%}
+.kdz *{box-sizing:border-box}
+.kdz .eye{font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--amber);margin:0 0 14px}
+.kdz h1.k{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:32px;line-height:1.16;
+letter-spacing:-.015em;margin:0 0 14px;color:var(--ink)}
+.kdz p.klead{font-size:18px;line-height:1.55;color:var(--ink2);margin:0 0 30px;padding-bottom:26px;border-bottom:1px solid var(--rule)}
+.kdz h2{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:24px;line-height:1.22;
+letter-spacing:-.01em;margin:48px 0 15px;padding-top:22px;border-top:1px solid var(--rule2);color:var(--ink)}
+.kdz .klead + h2{margin-top:6px;padding-top:0;border-top:0}
+.kdz h3{font-family:Georgia,"Times New Roman",serif;font-weight:700;font-size:19px;line-height:1.3;margin:32px 0 10px;color:var(--ink)}
+.kdz h4{font-size:16px;font-weight:700;margin:24px 0 8px;color:var(--ink)}
+.kdz .mk{margin-right:.4em;font-size:.88em}
+.kdz p{margin:0 0 15px;color:var(--ink)}
+.kdz hr{border:0;border-top:1px solid var(--rule2);margin:34px 0}
+.kdz strong{font-weight:700}
+.kdz a{color:var(--petrol)}
+.kdz code{font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;font-size:.86em;
+background:var(--raise);border:1px solid var(--rule2);border-radius:4px;padding:.08em .34em}
+.kdz ul,.kdz ol{margin:0 0 17px;padding:0 0 0 4px;list-style:none}
+.kdz li{position:relative;padding-left:24px;margin:0 0 8px;color:var(--ink)}
+.kdz ul>li:before{content:"";position:absolute;left:5px;top:.68em;width:5px;height:5px;border-radius:50%;background:var(--petrol);opacity:.55}
+.kdz ol{counter-reset:o}
+.kdz ol>li{counter-increment:o}
+.kdz ol>li:before{content:counter(o);position:absolute;left:0;top:.02em;font-size:12px;font-weight:700;color:var(--amber)}
+.kdz ul.check>li{padding-left:28px}
+.kdz ul.check>li:before{content:"";left:0;top:.38em;width:13px;height:13px;border-radius:3px;background:transparent;border:2px solid var(--petrol);opacity:.55}
+.kdz blockquote{margin:20px 0;padding:14px 18px;background:var(--raise);border-left:3px solid var(--petrol);border-radius:0 6px 6px 0}
+.kdz blockquote p{margin:0 0 8px;font-size:16px;line-height:1.55;color:var(--ink2)}
+.kdz blockquote p:last-child{margin:0}
+.kdz blockquote strong{color:var(--ink)}
+.kdz .diagram{margin:20px 0;padding:16px 18px;background:var(--card);border:1px solid var(--rule);border-radius:8px;overflow-x:auto}
+.kdz .diagram pre{margin:0;font-family:ui-monospace,"SFMono-Regular",Consolas,monospace;font-size:13px;line-height:1.7;color:var(--ink2);white-space:pre}
+.kdz .tw{margin:20px 0;overflow-x:auto;border:1px solid var(--rule);border-radius:8px;background:var(--card)}
+.kdz table{width:100%;border-collapse:collapse;font-size:15px;margin:0}
+.kdz thead th{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink3);
+text-align:left;padding:11px 15px;border-bottom:1px solid var(--rule);white-space:nowrap;background:transparent}
+.kdz tbody td{padding:11px 15px;border-bottom:1px solid var(--rule2);vertical-align:top;line-height:1.5;font-variant-numeric:tabular-nums}
+.kdz tbody tr:last-child td{border-bottom:0}
+.kdz tbody td:first-child{font-weight:600}
+.kdz tbody td code{background:transparent;border:0;padding:0}
+@media (max-width:640px){.kdz{font-size:16px}.kdz h1.k{font-size:26px}.kdz h2{font-size:21px}}</style>
+<div class="kdz">
+<div class="eye">Конспект 04</div>
+<h1 class="k">Автоматизация контента</h1>
+<p class="klead">Как перестать сидеть в чате с нейросетью по 3 часа и готовить отложку на месяц вперёд.</p>
+<h2>Главная задача</h2>
+<p>Не «написать статью», а <strong>делать больше качественных материалов за единицу времени</strong>. Всё остальное — производные от этого.</p>
+<hr>
+<h2><span class="mk">🧱</span>Промт — это не «ты опытный копирайтер»</h2>
+<p>Промты, которые начинаются с «ты опытный копирайтер с 10-летним стажем», создают <strong>иллюзию работы</strong>. Они нас успокаивают, но на результат не влияют.</p>
+<p>Работает разметка — Markdown или XML, где явно заданы блоки:</p>
+<div class="diagram"><pre>контекст → задача → формат ответа → проверка</pre></div>
+<p>Это лучшая рабочая вариация. Скопировал промт с такой структурой — вставил в любую нейросеть — контекст задан за секунду, не надо перепечатывать вводные.</p>
+<blockquote><p>💡 Новый чат всегда «в коматозе»: он не понимает, что и о чём. Заранее заданный контекст решает это сразу.</p></blockquote>
+<p><strong>Форматы промтов, которые стоит просто посмотреть глазами</strong> — даже если пользоваться не будете, поймёте, на чём строятся форматы: аватарка канала • описание канала • первые три статьи • выбор и упаковка ниши • формат гайда • вирусные форматы • кейс • статья-результат • серийный контент • истории и путешествия.</p>
+<hr>
+<h2><span class="mk">🤖</span>Почему топовая модель Claude, а не «любая нейросеть»</h2>
+<p>Дело не в моде. Дело в <strong>системе</strong>.</p>
+<p>Система — это большой свод правил (стиль, структура, сюжет, стоп-слова, проверки). Слабые модели читают её <strong>кусками</strong> и при этом честно отвечают, что прочли всё. Топовая модель Claude считывает систему точечно и целиком.</p>
+<p><strong>Проблемы официальной подписки (почему её мало):</strong></p>
+<div class="tw"><table><thead><tr><th>Что</th><th>Как это выглядит на практике</th></tr></thead><tbody><tr><td>Лимиты</td><td>2–5 текстов на 5-часовое окно. Недельный лимит сгорает за полдня</td></tr><tr><td>Оплата</td><td>Карта + подписка = несколько тысяч рублей ещё до первой статьи</td></tr><tr><td>Блокировки</td><td>Аккаунт может улететь в любой момент, особенно из СНГ</td></tr><tr><td>Ручной труд</td><td>Систему надо закидывать в <strong>каждый новый чат</strong>, потом писать тему, потом гонять итерации</td></tr></tbody></table></div>
+<hr>
+<h2><span class="mk">🔁</span>Что такое итерация и почему их 5–10</h2>
+<p><strong>Итерация</strong> — это цикл «написал → <em>исправь, найди ошибки, перепиши</em> → получил новый текст». Между итерациями может быть 3–5 запросов.</p>
+<p>Полный цикл генерации одной публикации выглядит так:</p>
+<div class="diagram"><pre>сюжет → проверка сюжета → докрутка → повторная проверка
+      → написание статьи → чистка и докрутка
+      → сверка с сюжетом/содержанием → финальная проверка → результат</pre></div>
+<p>Это 5–10 итераций и <strong>20–30 минут на статью</strong>. Именно за счёт них редактура превращается из 3 часов в 10–15 минут.</p>
+<p>Когда вы делаете это руками в чате, вы пишете «далее», «продолжай», «давай чистку», «сверь», «проверь». Здесь это заложено в шаги.</p>
+<blockquote><p>⚠️ Каждая итерация грузит контекст. Чем больше итераций — тем выше стоимость. Это плата за качество, а не баг.</p></blockquote>
+<hr>
+<h2><span class="mk">📦</span>Пакетная генерация</h2>
+<p>Ключевая механика: темы загружаются <strong>пачкой</strong>, а не по одной.</p>
+<ul><li>Закинули 10 тем → окно можно закрыть и идти заниматься своими делами</li><li>10 текстов готовятся ~20 минут</li><li>По завершении приходит уведомление в колокольчик</li><li>Можно ставить хоть 10, хоть 50, хоть 100, хоть 1000 тем за раз</li></ul>
+<p><strong>Ответ на вопрос «как сделать отложку на месяц вперёд»:</strong> проснулись в 7 утра, закинули темы, выбрали систему — к обеду всё готово.</p>
+<h3>Два лайфхака</h3>
+<p><strong>1. Экономия — пачками выгоднее.</strong> Стоимость считается не линейно: последние темы в пачке идут почти бесплатно. Минимальная выгодная планка — <strong>10 тем за раз</strong>. Меньше — переплачиваете.</p>
+<p><strong>2. Скорость — генерить утром.</strong> У модели есть часы пик, как заторы на дорогах. Загрузка в <strong>8:00–11:00</strong> (пока в США ночь) и вообще окно <strong>9:00–15:00</strong> отрабатывает в 3–4 раза быстрее, чем вечером.</p>
+<hr>
+<h2><span class="mk">🎯</span>Как довести систему до «не требует ручной доработки»</h2>
+<p>Это реально. И это целиком вопрос вашей системы, а не модели.</p>
+<ol><li>Сгенерируйте <strong>1–2 текста</strong>, не больше</li><li>Посмотрите, какие правки вы вносите <strong>чаще всего</strong></li><li>Внесите эти правки <strong>в саму систему</strong>, чтобы она так больше не писала</li><li>Повторите</li><li>Только потом масштабируйте на десятки и сотни</li></ol>
+<blockquote><p>❌ Частая ошибка: сразу сгенерировать 500–900 текстов, а потом два дня разгребать и в итоге выкинуть всю пачку.</p></blockquote>
+<p><strong>Каждый файл системы редактируется.</strong> В том числе файл «Стиль» — например, если тексты выходят от мужского лица, а нужен женский, правится одной строчкой в этом файле.</p>
+<p>Свою готовую систему с компьютера можно перенести целиком — она прогрузится и будет учитываться.</p>
+<hr>
+<h2><span class="mk">📏</span>Объём публикации</h2>
+<p><strong>5 000 – 15 000 символов</strong> — золотой стандарт на Дзен сегодня. 6–7 тысяч — нормально для большинства тем.</p>
+<hr>
+<h2><span class="mk">🔌</span>Мобильные прокси: для тех, кто уже на автопубликации</h2>
+<p>Проблема, на которую ушло две недели:</p>
+<p>При массовой заливке публикаций в черновики Дзен показывает капчу. Если с одного IP капча всплыла 50–70 раз — <strong>IP уходит в жёлтую зону CDN</strong>, и капча начинает вылезать на каждую публикацию.</p>
+<p>Что <strong>не</strong> помогло: 50 прокси, 100 прокси, 400 прокси (в 3 раза больше, чем каналов). Всё равно ложатся.</p>
+<p><strong>Что сработало — мобильные прокси.</strong> Они эмулируют юзер-агент телефона. А с телефона никто не автоматизирует, поэтому защита от роботов под мобильные у Дзена просто не настроена.</p>
+<p>Цена ~2 500 ₽ за штуку — это честная цена: за ней стоит реальная сим-карта в чьём-то роутере, наценка небольшая. На один такой прокси вешается ~3 аккаунта.</p>
+<blockquote><p>🔧 Сервис, которым пользуемся: <strong>mobileproxy.space</strong> (российские мобильные прокси).</p></blockquote>
+<hr>
+<h2><span class="mk">🛠</span>Что ещё есть под рукой</h2>
+<p>Помимо генерации — около 90 инструментов: транскрибация видео с YouTube, скачивание видео с VK / Rutube / Одноклассников / Яндекса, редактор картинок, генерация обложек.</p>
+<p><strong>Обложки, сгенерированные нейросетью, дополнительно прогоняются через фоторедактор</strong> с калибровкой под фотокамеры — по пикселям они получаются как реальные фотографии. Разница для алгоритма огромная, хотя глазу не видна.</p>
+<hr>
+<h2><span class="mk">✅</span>Чек-лист после этого урока</h2>
+<ul class="check"><li>Собрал систему и сгенерировал <strong>1–2</strong> текста, не больше</li><li>Выписал повторяющиеся правки и внёс их в файлы системы</li><li>Проверил файл «Стиль» (лицо повествования, длина абзацев)</li><li>Загружаю темы <strong>пачками от 10</strong> и <strong>утром</strong></li><li>Объём публикации в диапазоне 5–15 тыс. символов</li><li>Если автопубликую массово — перешёл на мобильные прокси</li></ul>
+<hr>
+<blockquote><p>📌 По любой нехватке — стоп-слова, длинные тире, новый промт, конвертация файлов — есть смысл писать напрямую в поддержку сервиса. Устно сказанное на эфире забывается, тикет гарантированно попадает в работу и обычно закрывается за 2–3 дня.</p></blockquote>
+</div>
